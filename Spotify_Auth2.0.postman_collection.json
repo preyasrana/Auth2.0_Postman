@@ -1,0 +1,554 @@
+{
+	"info": {
+		"_postman_id": "71d4e72a-42c6-4eb7-83c3-cdd9a9d7c060",
+		"name": "Spotify_Auth2.0",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Browse",
+			"item": [
+				{
+					"name": "new-releases",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{Baseurl}}/browse/new-releases",
+							"host": [
+								"{{Baseurl}}"
+							],
+							"path": [
+								"browse",
+								"new-releases"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Playlists",
+			"item": [
+				{
+					"name": "Create Playlist",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = JSON.parse(responseBody);",
+									"postman.setEnvironmentVariable(\"playlistid\", jsonData.id);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"Preyas Playlist\",\n  \"description\": \"Preyas playlist description\",\n  \"public\": false\n}\n\n\n\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{Baseurl}}/users/:user_id/playlists",
+							"host": [
+								"{{Baseurl}}"
+							],
+							"path": [
+								"users",
+								":user_id",
+								"playlists"
+							],
+							"variable": [
+								{
+									"key": "user_id",
+									"value": "{{User Id}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add Items to Playlist",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{Baseurl}}/playlists/:playlistid/tracks?uris={{Album_uri_alan_walker}}",
+							"host": [
+								"{{Baseurl}}"
+							],
+							"path": [
+								"playlists",
+								":playlistid",
+								"tracks"
+							],
+							"query": [
+								{
+									"key": "uris",
+									"value": "{{Album_uri_alan_walker}}"
+								}
+							],
+							"variable": [
+								{
+									"key": "playlistid",
+									"value": "{{playlistid}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Change Playlist Details",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"Updated Preyas Playlist\",\n  \"description\": \"Updated Preyas playlist description\",\n  \"public\": false\n}"
+						},
+						"url": {
+							"raw": "{{Baseurl}}/playlists/:playlistid",
+							"host": [
+								"{{Baseurl}}"
+							],
+							"path": [
+								"playlists",
+								":playlistid"
+							],
+							"variable": [
+								{
+									"key": "playlistid",
+									"value": "{{playlistid}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Remove Playlist Items",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"tracks\": [\n        {\n            \"uri\": \"{{Album_uri_alan_walker}}\"\n        }\n\n    ]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{Baseurl}}/playlists/:playlistid/tracks",
+							"host": [
+								"{{Baseurl}}"
+							],
+							"path": [
+								"playlists",
+								":playlistid",
+								"tracks"
+							],
+							"query": [
+								{
+									"key": "uris",
+									"value": "",
+									"disabled": true
+								}
+							],
+							"variable": [
+								{
+									"key": "playlistid",
+									"value": "{{playlistid}}"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "TestCases",
+			"item": [
+				{
+					"name": "Positive_TestCases",
+					"item": [
+						{
+							"name": "Add Item to Playlist",
+							"item": [
+								{
+									"name": "Create Playlist-Combinedata",
+									"item": [
+										{
+											"name": "Create Playlist Copy-stringvalue",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"exec": [
+															"var jsonData = JSON.parse(responseBody);",
+															"postman.setEnvironmentVariable(\"playlistid\", jsonData.id);"
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "POST",
+												"header": [],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n  \"name\": \"new playlist\",\n  \"description\": \"new playlist description\",\n  \"public\": false\n}\n\n\n\n",
+													"options": {
+														"raw": {
+															"language": "json"
+														}
+													}
+												},
+												"url": {
+													"raw": "{{Baseurl}}/users/:user_id/playlists",
+													"host": [
+														"{{Baseurl}}"
+													],
+													"path": [
+														"users",
+														":user_id",
+														"playlists"
+													],
+													"variable": [
+														{
+															"key": "user_id",
+															"value": "{{User Id}}"
+														}
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "Create Playlist Copy-Interger value",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"exec": [
+															"var jsonData = JSON.parse(responseBody);",
+															"postman.setEnvironmentVariable(\"playlistid\", jsonData.id);"
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "POST",
+												"header": [],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n  \"name\": \"100\",\n  \"description\": \"100 description\",\n  \"public\": false\n}\n\n\n\n",
+													"options": {
+														"raw": {
+															"language": "json"
+														}
+													}
+												},
+												"url": {
+													"raw": "{{Baseurl}}/users/:user_id/playlists",
+													"host": [
+														"{{Baseurl}}"
+													],
+													"path": [
+														"users",
+														":user_id",
+														"playlists"
+													],
+													"variable": [
+														{
+															"key": "user_id",
+															"value": "{{User Id}}"
+														}
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "Create Playlist Combined data",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"exec": [
+															"var jsonData = JSON.parse(responseBody);",
+															"postman.setEnvironmentVariable(\"playlistid\", jsonData.id);"
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "POST",
+												"header": [],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n  \"name\": \"Preyas Playlist 101\",\n  \"description\": \"Preyas playlist description 101\",\n  \"public\": false\n}\n\n\n\n",
+													"options": {
+														"raw": {
+															"language": "json"
+														}
+													}
+												},
+												"url": {
+													"raw": "{{Baseurl}}/users/:user_id/playlists",
+													"host": [
+														"{{Baseurl}}"
+													],
+													"path": [
+														"users",
+														":user_id",
+														"playlists"
+													],
+													"variable": [
+														{
+															"key": "user_id",
+															"value": "{{User Id}}"
+														}
+													]
+												}
+											},
+											"response": []
+										}
+									]
+								}
+							]
+						}
+					]
+				},
+				{
+					"name": "Negative_TestCases",
+					"item": [
+						{
+							"name": "Create Playlist exceed limit data",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"var jsonData = JSON.parse(responseBody);",
+											"postman.setEnvironmentVariable(\"playlistid\", jsonData.id);"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"name\": \"preyas playlist test\",\n  \"description\": \"Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.\",\n  \"public\": false\n}\n\n\n\n",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{Baseurl}}/users/:user_id/playlists",
+									"host": [
+										"{{Baseurl}}"
+									],
+									"path": [
+										"users",
+										":user_id",
+										"playlists"
+									],
+									"variable": [
+										{
+											"key": "user_id",
+											"value": "{{User Id}}"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Create Playlist Copy-blankobject",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"var jsonData = JSON.parse(responseBody);",
+											"postman.setEnvironmentVariable(\"playlistid\", jsonData.id);"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "\n{\n  \"name\": \"preyas playlist test\",\n  \"description\": \"Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.\",\n  \"public\": true\n}\n\n\n\n",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{Baseurl}}/users/:user_id/playlists",
+									"host": [
+										"{{Baseurl}}"
+									],
+									"path": [
+										"users",
+										":user_id",
+										"playlists"
+									],
+									"variable": [
+										{
+											"key": "user_id",
+											"value": "{{User Id}}"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Create Playlist Copy-without token",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"var jsonData = JSON.parse(responseBody);",
+											"postman.setEnvironmentVariable(\"playlistid\", jsonData.id);"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "\n\n\n\n",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{Baseurl}}/users/:user_id/playlists",
+									"host": [
+										"{{Baseurl}}"
+									],
+									"path": [
+										"users",
+										":user_id",
+										"playlists"
+									],
+									"variable": [
+										{
+											"key": "user_id",
+											"value": "{{User Id}}"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		}
+	],
+	"auth": {
+		"type": "oauth2",
+		"oauth2": [
+			{
+				"key": "redirect_uri",
+				"value": "https://oauth.pstmn.io/v1/browser-callback",
+				"type": "string"
+			},
+			{
+				"key": "useBrowser",
+				"value": false,
+				"type": "boolean"
+			},
+			{
+				"key": "tokenName",
+				"value": "",
+				"type": "string"
+			},
+			{
+				"key": "scope",
+				"value": "playlist-modify-public playlist-read-private playlist-modify-private",
+				"type": "string"
+			},
+			{
+				"key": "authUrl",
+				"value": "https://accounts.spotify.com/authorize",
+				"type": "string"
+			},
+			{
+				"key": "accessTokenUrl",
+				"value": "https://accounts.spotify.com/api/token",
+				"type": "string"
+			},
+			{
+				"key": "clientSecret",
+				"value": "{{Client Secret}}",
+				"type": "string"
+			},
+			{
+				"key": "clientId",
+				"value": "{{Client ID}}",
+				"type": "string"
+			},
+			{
+				"key": "addTokenTo",
+				"value": "header",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}
